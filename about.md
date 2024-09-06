@@ -1,8 +1,7 @@
 ---
 layout: default
-title: About Us
+title: "About Us"
 ---
+# About Us
+Welcome to the About page of Wright's Heart of Hope. Here you can find more information about our mission and values.
 
-## About Wright's Heart of Hope
-
-Wright's Heart of Hope is dedicated to providing shelter, support, and hope to those in need. Our mission is to create a better future for everyone by offering housing stability and essential resources.
