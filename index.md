@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head><link rel="stylesheet" href="styles.css">
+---
+layout: default
+title: "Welcome to Wright's Heart of Hope"
+---
+# Hello, World!
+Welcome to my new website, Wright's Heart of Hope.
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website</title>
-</head>
-<body>
-    <h1>Hello, World!</h1>
-    <p>Welcome to my new website.</p>
-</body><script src="script.js"></script>
-
-</html>
