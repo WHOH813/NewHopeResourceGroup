@@ -1,9 +1,9 @@
-name: CI/CD Pipeline
+name: .NET Core CI/CD Pipeline
 
 on:
   push:
     branches:
-      - main  # Runs on push to the main branch
+      - main  # Runs the workflow when pushing to the main branch
 
 jobs:
   build:
@@ -11,18 +11,19 @@ jobs:
 
     steps:
     - name: Checkout Code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v2  # Checks out your repository code
 
-    - name: Set Up Node.js (or your language)
-      uses: actions/setup-node@v2
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v2  # Sets up .NET
       with:
-        node-version: '14'
+        dotnet-version: '6.0.x'  # Specify your .NET version
 
-    - name: Install Dependencies
-      run: npm install
+    - name: Restore NuGet Packages
+      run: dotnet restore  # This restores the NuGet packages
 
-    - name: Run Tests
-      run: npm test
+    - name: Build the Solution
+      run: dotnet build --configuration Release --no-restore  # Builds your project
 
-    - name: Deploy (Optional)
-      run: echo "Deployment step here"
+    - name: Test the Solution (Optional)
+      run: dotnet test --no-restore --verbosity normal  # Run tests if needed
+
