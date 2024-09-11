@@ -1,11 +1,10 @@
-
 {
-  "name": "@WHOH813/NewHopeResourcesGroup",
+  "name": "@WHOH813/new-hope-resource-group",
   "version": "1.0.0",
-  "description": "A utility library for handling date and time operations",
+  "description": "A description of your project or package",
   "repository": {
     "type": "git",
-    "url": https://github.com/WHOH813/NewHopeResourceGroup.git
+    "url": "git+https://github.com/WHOH813/NewHopeResourceGroup.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -16,5 +15,6 @@
   "author": "Charyetta Wright",
   "license": "ISC"
 }
+
 
 
