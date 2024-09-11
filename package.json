@@ -1,0 +1,20 @@
+{
+  "name": "@WHOH813/new-hope-resource-group",
+  "version": "1.0.0",
+  "description": "A description of your project or package",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WHOH813/NewHopeResourceGroup.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Charyetta Wright",
+  "license": "ISC"
+}
+
+
+

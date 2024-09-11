@@ -1,0 +1,29 @@
+name: .NET Core CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Runs the workflow when pushing to the main branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2  # Checks out your repository code
+
+    - name: Setup .NET Core SDK
+      uses: actions/setup-dotnet@v2  # Sets up .NET
+      with:
+        dotnet-version: '6.0.x'  # Specify your .NET version
+
+    - name: Restore NuGet Packages
+      run: dotnet restore  # This restores the NuGet packages
+
+    - name: Build the Solution
+      run: dotnet build --configuration Release --no-restore  # Builds your project
+
+    - name: Test the Solution (Optional)
+      run: dotnet test --no-restore --verbosity normal  # Run tests if needed
+
