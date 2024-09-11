@@ -1,11 +1,11 @@
 
 {
-  "name": "@your-username/your-package-name",
+  "name": "@WHOH813/NewHopeResourcesGroup",
   "version": "1.0.0",
-  "description": "Your package description",
+  "description": "A utility library for handling date and time operations",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/your-username/your-repo-name.git"
+    "url": "git+https://github.com/WHOH813/NewHopeResourceGroup.git
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -13,7 +13,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Your Name",
+  "author": "Charyetta Wright",
   "license": "ISC"
 }
 
