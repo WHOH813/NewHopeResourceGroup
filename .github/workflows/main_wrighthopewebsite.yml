@@ -1,3 +1,5 @@
+
+
 name: Build and deploy ASP.NET Core app to Azure Web App - WrightHopeWebsite
 
 on:
@@ -21,14 +23,13 @@ jobs:
         with:
           dotnet-version: '8.x'  # Ensure it matches the .NET version you use
 
-      # Step 3: Build the project
+      # Step 3: Build the app
       - name: Build the app
-
-      run: dotnet build ./src/MyProject/MyProject.csproj--configuration Release
+        run: dotnet build ./src/MyProject/MyProject.csproj --configuration Release  # Update path if needed
 
       # Step 4: Publish the app
       - name: Publish the app
-        run: dotnet publish ./src/MyProject/MyProject.csproj -c Release -o ./myapp
+        run: dotnet publish ./src/MyProject/MyProject.csproj -c Release -o ./myapp  # Update path if needed
 
       # Step 5: Upload the build artifact
       - name: Upload artifact for deployment
@@ -69,4 +70,3 @@ jobs:
           app-name: 'WrightHopeWebsite'  # Azure Web App name
           slot-name: 'Production'  # Production slot
           package: ./myapp  # Path to the build artifact
-
