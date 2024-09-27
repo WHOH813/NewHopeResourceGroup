@@ -23,7 +23,8 @@ jobs:
 
       # Step 3: Build the project
       - name: Build the app
-        run: dotnet build --configuration Release
+
+      run: dotnet build ./src/MyProject/MyProject.csproj--configuration Release
 
       # Step 4: Publish the app
       - name: Publish the app
