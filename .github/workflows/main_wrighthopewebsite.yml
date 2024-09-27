@@ -3,33 +3,38 @@ name: Build and deploy ASP.NET Core app to Azure Web App - WrightHopeWebsite
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Trigger on pushes to the main branch
+  workflow_dispatch:  # Allows you to trigger the workflow manually
 
 jobs:
   build:
     runs-on: windows-latest
 
     steps:
+      # Step 1: Checkout code from GitHub
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Step 2: Set up the .NET Core SDK
       - name: Set up .NET Core
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.x'
+          dotnet-version: '8.x'  # Ensure it matches the .NET version you use
 
+      # Step 3: Build the project
       - name: Build the app
         run: dotnet build --configuration Release
 
+      # Step 4: Publish the app
       - name: Publish the app
-        run: dotnet publish -c Release -o ${{ env.DOTNET_ROOT }}/myapp
+        run: dotnet publish -c Release -o ./myapp
 
+      # Step 5: Upload the build artifact
       - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: .net-app
-          path: ${{ env.DOTNET_ROOT }}/myapp
+          path: ./myapp  # Folder containing the published build output
 
   deploy:
     runs-on: windows-latest
@@ -38,25 +43,29 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # This is required for requesting the JWT
+      id-token: write  # Required for requesting JWT for authentication
 
     steps:
+      # Step 1: Download the artifact from the build job
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: .net-app
-      
+
+      # Step 2: Login to Azure using GitHub Secrets
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_F58E67E7AEBA476C9D805EA6A0709245 }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_1141AFDA2D894A90967EF2D3B59CF273 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C09A98C8F8B14A8083AA02DCF4CC6C0B }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
+      # Step 3: Deploy the artifact to Azure Web App
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
-          app-name: 'WrightHopeWebsite'
-          slot-name: 'Production'
-          package: ${{ env.DOTNET_ROOT }}/myapp # Adjust this path if necessary
+          app-name: 'WrightHopeWebsite'  # Azure Web App name
+          slot-name: 'Production'  # Production slot
+          package: ./myapp  # Path to the build artifact
+
