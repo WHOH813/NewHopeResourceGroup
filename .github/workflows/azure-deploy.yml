@@ -1,32 +1,33 @@
-name: Deploy to Azure Web App
+name: Deploy .NET app to Azure Web App
 
 on:
   push:
     branches:
-      - main
+      - main  # Adjust if you are using a different branch for deployment
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'  
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '6.0.x'  
 
-      - name: Install dependencies
-        run: npm install
+    - name: Install dependencies
+      run: dotnet restore
 
-      - name: Build project
-        run: npm run build
+    - name: Build the project
+      run: dotnet build --configuration Release --no-restore
 
-      - name: Deploy to Azure Web App
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'WrightHopeWebsite'  
-          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}  
-          package: '.'
+    - name: Publish to Azure
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: "WrightHopeWebsite"  
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        package: ${{ github.workspace }}/bin/Release/net6.0/publish
+
