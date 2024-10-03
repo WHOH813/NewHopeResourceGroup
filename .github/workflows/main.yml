@@ -1,17 +1,53 @@
-name: Publish Package
+name: Build and deploy ASP.Net Core app to Azure Web App - wrightwordpresswebsite
 
 on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+  build:
+    runs-on: windows-latest
 
-      - name: Add GitHub Package Registry as a source
-        run: |
-          dotnet nuget add source -- WHOH813 NewHopeResourceGroup --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/YOUR_NAMESPACE/index.json"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '6.0.x'
+
+      - name: Build with dotnet
+        run: dotnet build --configuration Release
+
+      - name: Publish with dotnet
+        run: dotnet publish --configuration Release -o myapp
+
+      - name: Upload build artifact for deployment
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-dotnet-app
+          path: ./myapp
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+
+    steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: my-dotnet-app
+
+      - name: Azure Login
+        uses: azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'wrightwordpresswebsite'
+          package: ./myapp
+
